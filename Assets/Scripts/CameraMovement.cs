@@ -10,7 +10,7 @@ public class CameraMovement : MonoBehaviour
 
     void Update()
     {
-        // First touch input will control the camera rotation
+        // Mobile touch input, first touch input will control the camera rotation.
         if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Moved)
         {
             int inverted = invertCamera == true ? 1 : -1;
@@ -22,16 +22,16 @@ public class CameraMovement : MonoBehaviour
 
             transform.eulerAngles = new Vector3(pitch, yaw, 0);
         }
+        // Mouse button input, fires on mousedown.
         if (Input.GetMouseButton(0)) {
             int inverted = invertCamera == true ? 1 : -1;
 
-            pitch += Input.mousePosition.y * cameraSpeed * inverted * Time.deltaTime;
-            yaw += Input.mousePosition.x * cameraSpeed * Time.deltaTime;
+            pitch = Input.GetAxis("Mouse Y") * (cameraSpeed * 100) * inverted * Time.deltaTime;
+            yaw = Input.GetAxis("Mouse X") * (cameraSpeed * 100) * Time.deltaTime;
 
             pitch = Mathf.Clamp(pitch, -90, 90);
 
-            // transform.eulerAngles = new Vector3(pitch, yaw, 0);
-            // transform.Rotate(new Vector3())
+            transform.Rotate(pitch, yaw, 0);
         }
     }
 }
